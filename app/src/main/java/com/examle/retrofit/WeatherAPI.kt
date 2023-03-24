@@ -5,8 +5,8 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface WeatherAPI {
-    @GET("data/2.5/weather?appid=31c42b562a517b89d16aedeb55e891ac")
-    suspend fun getWeatherById(@Query("lat")lat:Double, @Query("lon")lon:Double):WeatherRes
+    @GET("data/2.5/forecast?appid=31c42b562a517b89d16aedeb55e891ac")
+    suspend fun getWeatherById(@Query("q")name:String):WeatherRes
 }
 
 interface GEOAPI{

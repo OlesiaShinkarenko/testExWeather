@@ -33,18 +33,14 @@ class MainActivity : AppCompatActivity() {
         baseUrl("https://api.openweathermap.org").client(client)
             .addConverterFactory(GsonConverterFactory.create()).build()
         val WeatherAPI = retrofit.create(WeatherAPI::class.java)
-        val GEOAPI = retrofit.create(GEOAPI::class.java)
 
 
             CoroutineScope(Dispatchers.IO).launch {
-                val geo = GEOAPI.getLonLat("London")
-                val weather = WeatherAPI.getWeatherById(geo[0].lat,geo[0].lon)
+                val weather = WeatherAPI.getWeatherById("London")
                 runOnUiThread{
-                    tv.text = weather.sys.sunrise.toString()
+                    tv.text = weather.city.sunrise.toString()
                 }
             }
-
-
 
     }
 }
