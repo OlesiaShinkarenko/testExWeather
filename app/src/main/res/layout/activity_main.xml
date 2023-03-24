@@ -5,11 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+    <com.google.android.material.appbar.AppBarLayout
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_width="match_parent"
+        android:background="@color/white"
+    android:layout_height="wrap_content">
     <Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="?attr/actionBarSize"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
@@ -21,8 +27,7 @@
         android:id="@+id/bNav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:foregroundTint="#F8E2E2"
-        app:backgroundTint="#E3ACAC"
+        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         bNav.selectedItemId = R.id.forecast
 
-//        openFrag(ForecastFragment.newInstance())
+           openFrag(ForecastFragment.newInstance())
 
         bNav.setOnNavigationItemSelectedListener {
             when(it.itemId){
