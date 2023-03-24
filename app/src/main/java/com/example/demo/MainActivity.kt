@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import com.examle.retrofit.GEOAPI
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
+
 import com.examle.retrofit.WeatherAPI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,31 +20,46 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 class MainActivity : AppCompatActivity() {
+    private val dataModel:DataModel by viewModels ()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val tv = findViewById<TextView>(R.id.tv)
 
+        val bNav = findViewById<BottomNavigationView>(R.id.bNav)
 
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        bNav.selectedItemId = R.id.forecast
 
-        val client = OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .build()
+//        openFrag(ForecastFragment.newInstance())
 
-        val retrofit = Retrofit.Builder().
-        baseUrl("https://api.openweathermap.org").client(client)
-            .addConverterFactory(GsonConverterFactory.create()).build()
-        val WeatherAPI = retrofit.create(WeatherAPI::class.java)
+        bNav.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.locations -> {
+                    openFrag(LocationsFragment.newInstance())
+                }
+                R.id.forecast ->{
+                    openFrag(ForecastFragment.newInstance())
 
+                }
+                R.id.settings->{
+                    Toast.makeText(this,"Settings", Toast.LENGTH_SHORT).show()
 
-            CoroutineScope(Dispatchers.IO).launch {
-                val weather = WeatherAPI.getWeatherById("London")
-                runOnUiThread{
-                    tv.text = weather.city.sunrise.toString()
                 }
             }
+            true
+        }
+        dataModel.message.observe(this,{
+        })
 
+//        val tv = findViewById<TextView>(R.id.tv)
+
+
+
+
+    }
+    private fun openFrag(f:Fragment){
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.frame,f)
+            .commit()
     }
 }

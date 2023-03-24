@@ -3,5 +3,16 @@
 <item android:id="@+id/locations"
     android:title="@string/locations"
     android:orderInCategory="1"
+    android:icon="@drawable/loc"
     />
+    <item android:id="@+id/forecast"
+        android:title="@string/forecast"
+        android:icon="@drawable/forca"
+        android:orderInCategory="2"
+        />
+    <item android:id="@+id/settings"
+        android:title="@string/settings"
+        android:icon="@drawable/setti"
+        android:orderInCategory="3"
+        />
 </menu>
