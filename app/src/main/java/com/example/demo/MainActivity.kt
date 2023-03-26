@@ -11,6 +11,12 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -18,7 +24,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private val dataModel:DataModel by viewModels ()
-
+    lateinit var navController:NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,39 +35,23 @@ class MainActivity : AppCompatActivity() {
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-        bNav.selectedItemId = R.id.forecast
 
-        openFrag(ForecastFragment.newInstance())
 
-        bNav.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.locations -> {
-                    openFrag(LocationsFragment.newInstance())
-                }
-                R.id.forecast ->{
-                    openFrag(ForecastFragment.newInstance())
 
-                }
-                R.id.settings->{
-                    Toast.makeText(this,"Settings", Toast.LENGTH_SHORT).show()
 
-                }
-            }
-            true
-        }
+        navController = findNavController(R.id.fragmentContainerView)
+        bNav.setupWithNavController(navController)
+        val  appBarConfiguration = AppBarConfiguration(setOf(R.id.locationsFragment,R.id.forecastFragment))
+
+        setupActionBarWithNavController(navController,appBarConfiguration)
+
+
         dataModel.message.observe(this,{
         })
-
 //        val tv = findViewById<TextView>(R.id.tv)
-
-
-
-
     }
-    private fun openFrag(f:Fragment){
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.frame,f)
-            .commit()
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
     }
+
 }

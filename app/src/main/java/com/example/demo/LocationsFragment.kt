@@ -26,10 +26,8 @@ class LocationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.findViewById<Button>(R.id.buttonSendLoc).setOnClickListener{
             dataModel.message.value = "London"
-            (activity as AppCompatActivity).supportActionBar?.title = "London"
-            (activity as AppCompatActivity).supportFragmentManager.beginTransaction().replace(R.id.frame,ForecastFragment.newInstance()).commit()
+
         }
-        (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.locations)
         super.onViewCreated(view, savedInstanceState)
     }
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/locations"
+<item android:id="@+id/locationsFragment"
     android:title="@string/locations"
     android:orderInCategory="1"
     android:icon="@drawable/loc"
     />
-    <item android:id="@+id/forecast"
+    <item android:id="@+id/forecastFragment"
         android:title="@string/forecast"
         android:icon="@drawable/forca"
         android:orderInCategory="2"
