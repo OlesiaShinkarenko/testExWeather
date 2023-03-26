@@ -1,35 +1,37 @@
 package com.example.demo
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.view.View
+
 import android.widget.Toast
+
 import androidx.activity.viewModels
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 
-import com.examle.retrofit.WeatherAPI
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
+
 
 class MainActivity : AppCompatActivity() {
     private val dataModel:DataModel by viewModels ()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bNav = findViewById<BottomNavigationView>(R.id.bNav)
+        val bNav:BottomNavigationView = findViewById (R.id.bNav)
 
+
+        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
         bNav.selectedItemId = R.id.forecast
 
-           openFrag(ForecastFragment.newInstance())
+        openFrag(ForecastFragment.newInstance())
 
         bNav.setOnNavigationItemSelectedListener {
             when(it.itemId){
