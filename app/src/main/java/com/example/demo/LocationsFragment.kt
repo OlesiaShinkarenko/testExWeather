@@ -10,14 +10,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class LocationsFragment : Fragment() {
 
     private val dataModel:DataModel by activityViewModels()
+    private lateinit var recyclerView: RecyclerView
+    private  val recyclerAdapter= RecyclerAdapter()
+
+    private lateinit var  CitiesList:ArrayList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
     }
 
     override fun onCreateView(
@@ -30,12 +37,18 @@ class LocationsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-                view.findViewById<Button>(R.id.buttonSendLoc).setOnClickListener{
+        /*
             dataModel.message.value = "London"
             (activity as MainActivity).navController.navigate(R.id.action_locationsFragment_to_forecastFragment)
-        }
+        */
         super.onViewCreated(view, savedInstanceState)
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = recyclerAdapter
+        recyclerAdapter.addCity("London")
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu);

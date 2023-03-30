@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
     app:layout_constraintTop_toTopOf="parent"
     android:layout_width="match_parent"
         android:background="@color/white"
@@ -15,16 +16,14 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
-
-
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <fragment
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
         android:id="@+id/fragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:defaultNavHost="true"
         app:navGraph="@navigation/navig" />
 

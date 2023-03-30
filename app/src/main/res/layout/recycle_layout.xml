@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+<ImageView
+    android:id="@+id/list_image"
+    android:scaleType="centerInside"
+    android:padding="8dp"
+    android:src="@drawable/list"
+    android:layout_margin="@dimen/cardview_default_elevation"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"/>
+    <TextView
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:id="@+id/description_location"
+        android:layout_width="0dp"
+        android:layout_weight="8"
+        android:layout_height="wrap_content"
+        android:text="Some text"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        />
+    <ImageView
+        android:padding="8dp"
+        android:layout_weight="1"
+        android:src="@drawable/del"
+        android:scaleType="centerInside"
+        android:layout_margin="@dimen/cardview_default_elevation"
+        android:id="@+id/delete_list_item"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"/>
+</LinearLayout>
