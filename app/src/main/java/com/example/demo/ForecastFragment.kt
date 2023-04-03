@@ -45,11 +45,14 @@ class ForecastFragment : Fragment() {
         val WeatherAPI = retrofit.create(WeatherAPI::class.java)
 
 
-        dataModel.message.observe(activity as LifecycleOwner,
-            {   CoroutineScope(Dispatchers.IO).launch {
+        dataModel.message.observe(activity as LifecycleOwner
+        ) {
+            CoroutineScope(Dispatchers.IO).launch {
                 val weather = WeatherAPI.getWeatherById(it)
-                view.findViewById<TextView>(R.id.textViewForecast).text = weather.city.sunrise.toString()
-            }})
+                view.findViewById<TextView>(R.id.textViewForecast).text =
+                    weather.city.sunrise.toString()
+            }
+        }
 
         super.onViewCreated(view, savedInstanceState)
     }

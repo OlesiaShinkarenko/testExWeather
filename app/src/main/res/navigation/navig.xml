@@ -18,24 +18,10 @@
         <action
             android:id="@+id/action_locationsFragment_to_forecastFragment"
             app:destination="@id/forecastFragment" />
-        <action
-            android:id="@+id/action_locationsFragment_to_addActivity"
-            app:destination="@id/addActivity" />
-        <action
-            android:id="@+id/action_locationsFragment_to_addActivity2"
-            app:destination="@id/addActivity" />
-        <action
-            android:id="@+id/action_locationsFragment_to_addActivity3"
-            app:destination="@id/addActivity" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
         android:name="com.example.demo.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
-    <activity
-        android:id="@+id/addActivity"
-        android:name="com.example.demo.AddActivity"
-        android:label="activity_add"
-        tools:layout="@layout/activity_add" />
 </navigation>
