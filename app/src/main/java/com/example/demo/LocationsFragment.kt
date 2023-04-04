@@ -1,46 +1,49 @@
 package com.example.demo
 
-import android.app.Activity
-import android.content.ContentValues.TAG
+import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.AdapterView.OnItemClickListener
 import androidx.fragment.app.Fragment
-import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.examle.retrofit.AutoCompeleteAPI
-import com.examle.retrofit.WeatherAPI
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 
 class LocationsFragment : Fragment() {
 
     private val dataModel:DataModel by activityViewModels()
     private lateinit var recyclerView: RecyclerView
     private  val recyclerAdapter= RecyclerAdapter()
-
-    private lateinit var  CitiesList:ArrayList<String>
-
+    var pref:SharedPreferences? = null
+    private var launcher: ActivityResultLauncher<Intent>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
+        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result:ActivityResult ->
+            if (result.resultCode == RESULT_OK){
+                    val text = result.data?.getStringExtra("locations")
+                recyclerAdapter.addCity(text.toString())
+            }
+        }
+        pref = activity?.getSharedPreferences("Locations", Context.MODE_PRIVATE)
+        val jsonText = pref?.getString("loc", null)
+        if (!jsonText.isNullOrEmpty()) {
+            val gson = GsonBuilder().create()
+            val theList = gson.fromJson<ArrayList<String>>(jsonText, object :
+                TypeToken<ArrayList<String>>(){}.type)
+            for (i in theList)
+                recyclerAdapter.addCity(i)
+        }
     }
 
     override fun onCreateView(
@@ -52,42 +55,49 @@ class LocationsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        /*
-            dataModel.message.value = "London"
-            (activity as MainActivity).navController.navigate(R.id.action_locationsFragment_to_forecastFragment)
-        */
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(context)
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = recyclerAdapter
-        recyclerAdapter.addCity("London")
+       recyclerAdapter.setOnClickListener(object :
+       RecyclerAdapter.OnClickListener{
+           override fun onClick(position: Int, s: String) {
+               saveData(recyclerAdapter.getArray())
+               dataModel.message.value = s
+               (activity as MainActivity).navController.navigate(R.id.action_locationsFragment_to_forecastFragment)
+           }
+       })
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
-
         super.onCreateOptionsMenu(menu, inflater)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             R.id.addLocations -> {
-                val intent = Intent(activity?.applicationContext, AddActivity::class.java )
-                startActivity(intent)
+                launcher?.launch(Intent(context,AddActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    fun saveData(result: ArrayList<String>){
+        val editor = pref?.edit()
+        val gson:Gson = Gson()
+        val jsonResult = gson.toJson(result)
+        editor?.putString("loc",jsonResult)
+        editor?.apply()
+    }
 
-
+    override fun onDestroy() {
+        saveData(recyclerAdapter.getArray())
+        super.onDestroy()
+    }
     companion object {
         @JvmStatic
         fun newInstance() = LocationsFragment()
     }
-
-
-
 }

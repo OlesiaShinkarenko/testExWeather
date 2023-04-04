@@ -36,9 +36,9 @@ data class ListDt(
 
 data class Weather (
     val id: Int,
-    val weather_main: String,
-    val weather_description: String,
-    val weather_icon:String
+    val main: String,
+    val description: String,
+    val icon:String
         )
 
 data class Main(

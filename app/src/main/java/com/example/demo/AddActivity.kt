@@ -2,6 +2,7 @@ package com.example.demo
 
 import android.annotation.SuppressLint
 import android.app.SearchManager
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -10,10 +11,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.ListView
-import android.widget.SearchView
+import android.view.View
+import android.widget.*
+import android.widget.AdapterView.OnItemClickListener
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.view.isNotEmpty
 import com.examle.retrofit.AutoCompeleteAPI
 
@@ -74,6 +75,26 @@ class AddActivity : AppCompatActivity() {
                 return true
             }
         })
+
+        val btnBack = findViewById<ImageButton>(R.id.btnback)
+        btnBack.setOnClickListener{
+            finish()
+        }
+        list.onItemClickListener =  object : OnItemClickListener{
+            override fun onItemClick(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val itemValue = list.getItemAtPosition(position) as String
+                val i = Intent()
+                i.putExtra("locations", itemValue)
+                setResult(RESULT_OK, i)
+                finish()
+            }
+
+        }
     }
 
 }
