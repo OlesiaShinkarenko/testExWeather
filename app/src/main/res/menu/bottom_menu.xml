@@ -10,7 +10,7 @@
         android:icon="@drawable/forca"
         android:orderInCategory="2"
         />
-    <item android:id="@+id/settings"
+    <item android:id="@+id/settingsFragment"
         android:title="@string/settings"
         android:icon="@drawable/setti"
         android:orderInCategory="3"

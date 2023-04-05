@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Demo</string>
+    <string name="app_name">Weather</string>
     <string name="locations">Locations</string>
     <string name="forecast">Forecast</string>
     <string name="settings">Settings</string>
@@ -7,4 +7,5 @@
     <string name="now">Right now</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="week">This week</string>
+    <string name="settings_fragment">THIS FRAGMENT IS STILL IN DEVELOPMENT</string>
 </resources>

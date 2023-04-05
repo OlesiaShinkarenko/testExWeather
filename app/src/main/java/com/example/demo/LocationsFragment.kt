@@ -63,6 +63,7 @@ class LocationsFragment : Fragment() {
        recyclerAdapter.setOnClickListener(object :
        RecyclerAdapter.OnClickListener{
            override fun onClick(position: Int, s: String) {
+
                saveData(recyclerAdapter.getArray())
                dataModel.message.value = s
                (activity as MainActivity).navController.navigate(R.id.action_locationsFragment_to_forecastFragment)

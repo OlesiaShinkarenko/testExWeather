@@ -24,7 +24,8 @@
         android:text="Some text"
 
         />
-    <ImageView
+    <ImageButton
+        android:backgroundTint="@android:color/transparent"
         android:padding="8dp"
         android:layout_weight="1"
         android:src="@drawable/del"

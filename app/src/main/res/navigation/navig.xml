@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navig"
     app:startDestination="@id/forecastFragment">
-
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.demo.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/forecastFragment"
         android:name="com.example.demo.ForecastFragment"
@@ -24,4 +28,5 @@
         android:name="com.example.demo.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+
 </navigation>
